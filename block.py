@@ -2,10 +2,10 @@ import json
 import hashlib
 
 class Block:
-    def __init__(self, timestamp, nonce, previousHash, transactions):
+    def __init__(self, timestamp, nonce, previous_hash, transactions):
         self.timestamp = timestamp
         self.nonce = nonce
-        self.previousHash = previousHash
+        self.previous_hash = previous_hash
         self.transactions = transactions
     
     def to_json(self):
