@@ -1,38 +1,37 @@
-from block import Block
-from transaction import Transaction
+import logging
+import sys
+import time
 
-class Blockchain:
-    
-    def __init__(self, blockchain_address):
-        block = Block(datetime.now(), 0, '', [])
-        self.create_block(0, block.hash())
-        self.blockchain_address = blockchain_address
+
+class BlockChain(object):
+
+    def __init__(self):
+        self.transaction_pool = []
         self.chain = []
+        self.create_block(0, 'init hash')
 
     def create_block(self, nonce, previous_hash):
-        block = Block(nonce, previous_hash, self.transactionPool)
+        block = {
+            'timestamp': time.time(),
+            'transactions': self.transaction_pool,
+            'nonce': nonce,
+            'previous_hash': previous_hash
+        }
         self.chain.append(block)
-        self.transactionPool = []
-        return block
+        self.transaction_pool = []
+        return
 
-    def get_last_block(self):
-        return self.chain[-1]
+def pprint(chains):
+    for i, chain in enumerate(chains):
+        print(f'{"="*25} Chain {i} {"="*25}')
+        for k, v in chain.items():
+            print(f'{k:15}{v}')
+    print(f'{"*"*25}')
 
-    def add_transaction(self, sender, recipient, value):
-        new_transaction = Transaction(sender, recipient, value)
-
-    def mining(self):
-        return True
-
-    def calc_total_amount(self, blockchain_address):
-        total_amount = 0.0
-        for block in self.chain:
-            for t in block.transactions:
-                value = t.value
-                if blockchain_address == t.recipient_blockchain_address:
-                    total_amount += value
-                
-                if blockchain_address == t.sender_blockchain_address:
-                    total_amount -= value
-
-        return total_amount
+if __name__ == '__main__':
+    block_chain = BlockChain()
+    pprint(block_chain.chain)
+    block_chain.create_block(5, 'hash 1')
+    pprint(block_chain.chain)
+    block_chain.create_block(2, 'hash 2')
+    pprint(block_chain.chain)
