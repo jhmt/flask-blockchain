@@ -42,7 +42,7 @@ class BlockChain(object):
 def pprint(chains):
     for i, chain in enumerate(chains):
         print(f'{"="*25} Chain {i} {"="*25}')
-        for k, v in chain.items():
+        for k, v in sorted(chain.items()):
             if k == 'transactions':
                 print(k)
                 for d in v:
